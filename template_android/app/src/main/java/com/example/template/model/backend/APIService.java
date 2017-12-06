@@ -106,68 +106,12 @@ public interface APIService {
 
     //PHP
     @POST("sendToken.php")
-    //NODE
-//     @POST("sendToken")
-    //PYTHON
-//     @POST("sendToken")
+
     @FormUrlEncoded
     Call<ResponseBody> updateToken(
             @Field("registeration_id") String token
     );
 
-
-    // RxJava
-    @POST("/posts")
-    @FormUrlEncoded
-    Observable<ResponseBody> updateTokenRX(@Field("user_registeration_id") String user_registeration_id
-    );
-
-
-//
-//    @POST("/posts")
-//    @FormUrlEncoded
-//    Call<Post> savePost(@Field("title") String title,
-//                        @Field("body") String body,
-//                        @Field("userId") long userId);
-//
-//    // RxJava
-//   /* @POST("/posts")
-//    @FormUrlEncoded
-//    Observable<Post> savePost(@Field("title") String title,
-//                              @Field("body") String body,
-//                              @Field("userId") long userId);*/
-//
-//    @POST("/posts")
-//    Call<Post> savePost(@Body Post post);
-//
-//    @PUT("/posts/{id}")
-//    @FormUrlEncoded
-//    Call<Post> updatePost(@Path("id") long id,
-//                          @Field("title") String title,
-//                          @Field("body") String body,
-//                          @Field("userId") long userId);
-//
-//    @DELETE("/posts/{id}")
-//    Call<Post> deletePost(@Path("id") long id);
-
-    ////////
-
-//    @GET("/books/{bookId}")
-//    Call<Book> get(@Path("bookId") Integer bookId);
-//
-//    @GET("/books")
-//    Call<List<Book>> get();
-//
-//    @POST("/books")
-//    Call<Book> create(@Body Book book);
-//
-//    @PUT("/books/{bookId}")
-//    Call<Book> update(@Body Book book, @Path("bookId") Integer bookId);
-//
-//    @DELETE("/books/{bookId}")
-//    Call<Void> delete(@Path("bookId") Integer bookId);
-//
-//
-//
+  
 
 }
