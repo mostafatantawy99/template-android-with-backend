@@ -106,48 +106,48 @@ public class ApiHelper {
 
 
         //rxjava 2
-        mAPIService.getCategoriesRX(param_securitykey )
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                 .subscribeWith(new DisposableObserver<CategoriesRestApiResponse>() {
-                     @Override
-                     public void onNext(@io.reactivex.annotations.NonNull CategoriesRestApiResponse response) {
+//         mAPIService.getCategoriesRX(param_securitykey )
+//                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+//                  .subscribeWith(new DisposableObserver<CategoriesRestApiResponse>() {
+//                      @Override
+//                      public void onNext(@io.reactivex.annotations.NonNull CategoriesRestApiResponse response) {
 
-                              callback.onDataObjectLoaded(response, url );
-                             if (caching) {
-                                 saveToCache(url, params, new Gson().toJson(response),
-                                         response.getClass().getName());
-                             }
-                     }
+//                               callback.onDataObjectLoaded(response, url );
+//                              if (caching) {
+//                                  saveToCache(url, params, new Gson().toJson(response),
+//                                          response.getClass().getName());
+//                              }
+//                      }
 
-                     @Override
-                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                         callback.onNetworkError(e.getMessage(), url);
-                         e.printStackTrace();
-                         Log.d(TAG, "onFailure: " + e.getMessage());
-                     }
+//                      @Override
+//                      public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+//                          callback.onNetworkError(e.getMessage(), url);
+//                          e.printStackTrace();
+//                          Log.d(TAG, "onFailure: " + e.getMessage());
+//                      }
 
-                     @Override
-                     public void onComplete() {
+//                      @Override
+//                      public void onComplete() {
 
-                     }
-                 });
+//                      }
+//                  });
 
 
-//        mAPIService.getCategories(param_securitykey).enqueue(new Callback<CategoriesRestApiResponse>() {
-//            @Override
-//            public void onResponse(Call<CategoriesRestApiResponse> call, Response<CategoriesRestApiResponse> response) {
-//                completeWithResponse(response, callback, caching, url, params);
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<CategoriesRestApiResponse> call, Throwable t) {
-//
-//                callback.onNetworkError(t.getMessage(), url);
-//                t.printStackTrace();
-//                Log.d(TAG, "onFailure: " + t.getMessage());
-//            }
-//        });
+       mAPIService.getCategories(param_securitykey).enqueue(new Callback<CategoriesRestApiResponse>() {
+           @Override
+           public void onResponse(Call<CategoriesRestApiResponse> call, Response<CategoriesRestApiResponse> response) {
+               completeWithResponse(response, callback, caching, url, params);
+           }
+
+
+           @Override
+           public void onFailure(Call<CategoriesRestApiResponse> call, Throwable t) {
+
+               callback.onNetworkError(t.getMessage(), url);
+               t.printStackTrace();
+               Log.d(TAG, "onFailure: " + t.getMessage());
+           }
+       });
 
     }
 
