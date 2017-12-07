@@ -138,7 +138,7 @@ I used post , get , put and delete
 
 - the RestApiListAct activity in the android app connects to php backend , you can modify the code to make android connects to either nodejs or python backend
 but of course if you run nodejs server or python server , the android app will be able to receive 
-the firebase cloud messages and thes ocket.io nodejs server messages
+the firebase cloud messages and the socket.io nodejs server messages
 
 - in any server of the 3 servers , when inserting new category , the server sends firebase cloud message "new category added" to all registered devices
 and in case of nodejs server , it also sends all of categories in the remote mysql database to all devices that have sockets connected to it 
