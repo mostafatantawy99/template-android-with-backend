@@ -130,13 +130,17 @@ public abstract class CustomRecyclerViewAdapterExtending<T>
 
     public void removeItem(int position) {
         mList.remove(position);
-        notifyItemRemoved(position);
+         notifyDataSetChanged();
     }
 
+    public void addItem(T data) {
+        mList.add(data);
+        notifyDataSetChanged();
+    }
 
     public void addItem(int position, T data) {
         mList.add(position, data);
-        notifyItemInserted(position);
+        notifyDataSetChanged();
     }
 
     public void setAll(List<T> mItems) {
@@ -144,7 +148,7 @@ public abstract class CustomRecyclerViewAdapterExtending<T>
         for (int i = 0; i < mItems.size(); i++) {
             mList.add(mItems.get(i));
         }
-        notifyDataSetChanged();
+       notifyDataSetChanged();
     }
 
 

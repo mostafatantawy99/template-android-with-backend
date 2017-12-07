@@ -71,19 +71,31 @@ public abstract class Validator {
     }
 
     public boolean checkFields(ValidationCallback callback,boolean firstOnly) {
+        boolean finalResult = true;
         boolean result = true;
         mHasFailed = false;
         for (ValidationHolder validationHolder : mValidationHolderList) {
-            if(firstOnly&&(!result))
+            if(firstOnly)
             {
-                break;
+                if(!finalResult)
+                {
+                    break;
+                }
+                else
+                {
+                    finalResult = checkErrorEditText(validationHolder, callback);
+                }
             }
             else
             {
-                result = checkErrorEditText(validationHolder, callback);
+                if(!result)
+                {
+                    finalResult=false;
+                }
+                 result = checkErrorEditText(validationHolder, callback);
             }
         }
-        return result;
+        return finalResult;
     }
 
     public boolean checkErrorEditText(ValidationHolder validationHolder , ValidationCallback callback )

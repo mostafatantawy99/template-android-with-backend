@@ -17,17 +17,18 @@ package com.example.template.ui.TestSqliteDbflow.notes;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-
 import com.basgeekball.awesomevalidation.model.IsEmptyRule;
 import com.basgeekball.awesomevalidation.model.Rule;
 import com.example.template.R;
 import com.example.template.model.bean.sqlite.Note;
+import com.example.template.model.bean.sqlite.NoteType;
 import com.example.template.ui.TestSqliteDbflow.notes.adapters.NotesAdapterExtending;
 import com.example.template.ui.TestSqliteDbflow.notes.presenter.NoteContract;
 import com.example.template.ui.TestSqliteDbflow.notes.presenter.NotePresenter;
@@ -37,11 +38,10 @@ import com.example.template.ui.utils.adapters.CustomRecyclerViewAdapterExtending
 import com.example.template.utils.KeyBoardUtil;
 import com.example.template.utils.validation.awesome.ValidationUtilAwesome;
 import com.example.template.utils.validation.listeners.OnValidationCallBack;
-import com.example.template.utils.validation.saripaar.ValidationUtilSaripaar;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Order;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,28 +50,26 @@ import static com.example.template.ui.utils.adapters.CustomRecyclerViewAdapter.N
 
 public class NotesActivity extends ParentActivity<NotePresenter>
 
-        implements NoteContract.IView, OnValidationCallBack
+        implements NoteContract.IView ,OnValidationCallBack
 
-   //  ,  CustomRecyclerViewAdapterExtending.OnViewHolderClick
+      //  , CustomRecyclerViewAdapterExtending.OnViewHolderClick
 
 {
 
     @BindView(R.id.editTextNote)
-    @NotEmpty
-    @Order(1)
     EditText editText;
     @BindView(R.id.buttonAdd)
     View addNoteButton;
     @BindView(R.id.recyclerViewNotes)
     RecyclerView recyclerView;
     private CustomRecyclerViewAdapter notesAdapter;
-    // private NotesAdapterExtending notesAdapterExtending;
+   //  private NotesAdapterExtending notesAdapterExtending;
 
-    ValidationUtilSaripaar validationUtilSaripaar;
-    ValidationUtilAwesome validationUtilAwesome;
+    ValidationUtilAwesome validationUtilAwesome ;
 
     @Override
-    public int getExtraLayout() {
+    public int getExtraLayout()
+    {
         return R.layout.act_sqlite_notes;
     }
 
@@ -82,10 +80,10 @@ public class NotesActivity extends ParentActivity<NotePresenter>
         getCsTitle().hideMenuAndSettingsAndBack();
         getCsTitle().updateTitle(getString(R.string.sqlite_notes));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // notesAdapterExtending =new NotesAdapterExtending(this,this);
-        notesAdapter = new CustomRecyclerViewAdapter<Note>(this, NotesType);
-         //recyclerView.setAdapter(notesAdapterExtending);
-        recyclerView.setAdapter(notesAdapter);
+         //notesAdapterExtending =new NotesAdapterExtending(this,this);
+        notesAdapter =new CustomRecyclerViewAdapter<Note>(this,NotesType);
+        //recyclerView.setAdapter(notesAdapterExtending);
+         recyclerView.setAdapter(notesAdapter);
         editText.setOnEditorActionListener(new OnEditorActionListener() {
 
             @Override
@@ -97,10 +95,6 @@ public class NotesActivity extends ParentActivity<NotePresenter>
                 return false;
             }
         });
-
-        //SARIPAAR VALIDATION
-        validationUtilSaripaar = new ValidationUtilSaripaar(this, this);
-        editText.setOnFocusChangeListener(validationUtilSaripaar);
 
         //AWESOME VALIDATION
         validationUtilAwesome = new ValidationUtilAwesome(this, this);
@@ -120,8 +114,9 @@ public class NotesActivity extends ParentActivity<NotePresenter>
 
     @Override
     public NotePresenter injectDependencies() {
-        return new NotePresenter(this, this);
+        return new NotePresenter(this,this);
     }
+
 
 
     public void onAddButtonClick(View view) {
@@ -129,19 +124,18 @@ public class NotesActivity extends ParentActivity<NotePresenter>
     }
 
     private void addNote() {
-        //  validationUtilSaripaar.validateAllFirstError();
-        // validationUtilSaripaar.validateAll();
         validationUtilAwesome.validateAllFirstError();
         //   validationUtilAwesome.validateAll();
-
     }
 
 
     @Override
     public void showNotes(List<Note> notes) {
-        //notesAdapterExtending.setAll(notes);
-        notesAdapter.setAll(notes);
+        // notesAdapterExtending.setAll(notes);
+          notesAdapter.setAll(notes);
     }
+
+
 
     @Override
     public void onValidationSucceeded() {
@@ -151,10 +145,8 @@ public class NotesActivity extends ParentActivity<NotePresenter>
         String noteText = editText.getText().toString();
         editText.setText("");
         getNotePresenter().addNote(noteText);
-        getNotePresenter().getNotes();
-
         KeyBoardUtil.hideSoftKeyboard(this);
-
+        getNotePresenter().getNotes();
 
     }
 
@@ -167,6 +159,5 @@ public class NotesActivity extends ParentActivity<NotePresenter>
 //        Note note = (Note)notesAdapterExtending.getItem(position);
 //        getNotePresenter().deleteNote(note);
 //        notesAdapterExtending.removeItem(position);
-//        notesAdapterExtending.notifyDataSetChanged();
 //    }
 }

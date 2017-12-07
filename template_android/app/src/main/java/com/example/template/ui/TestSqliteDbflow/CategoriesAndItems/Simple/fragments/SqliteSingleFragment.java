@@ -2,6 +2,7 @@ package com.example.template.ui.TestSqliteDbflow.CategoriesAndItems.Simple.fragm
 
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.model.IsEmptyRule;
+import com.basgeekball.awesomevalidation.model.PatternRule;
 import com.basgeekball.awesomevalidation.model.Rule;
 import com.example.template.R;
 import com.example.template.model.bean.sqlite.Categories;
@@ -22,6 +24,10 @@ import com.example.template.ui.TestSqliteDbflow.CategoriesAndItems.Simple.presen
 import com.example.template.ui.utils.GUI.CustomSpinner;
 import com.example.template.utils.validation.awesome.ValidationUtilAwesome;
 import com.example.template.utils.validation.listeners.OnValidationCallBack;
+import com.example.template.utils.validation.saripaar.ValidationUtilSaripaar;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Order;
 
 import java.util.ArrayList;
 
@@ -38,7 +44,6 @@ import static com.example.template.utils.Constants.SqliteSingleSource;
 import static com.example.template.utils.Constants.SqliteSourceCategories;
 import static com.example.template.utils.Constants.SqliteSourceItems;
 
-//import com.example.template.model.bean.sqlite.Categories;
 
 public class SqliteSingleFragment extends BaseSupportFragment<SqliteSingleFragmentPresenter>
         implements ISqliteSingleFragmentContract.ISqliteSingleFragmentView
@@ -53,8 +58,12 @@ public class SqliteSingleFragment extends BaseSupportFragment<SqliteSingleFragme
     @BindView(R.id.spCategories)
     CustomSpinner spCategories;
     @BindView(R.id.edName)
+    @NotEmpty
+    @Order(1)
     EditText edName;
     @BindView(R.id.edDescription)
+    @NotEmpty
+    @Order (2)
     EditText edDescription;
     @BindView(R.id.btnAdd)
     Button btnAdd;
@@ -68,10 +77,7 @@ public class SqliteSingleFragment extends BaseSupportFragment<SqliteSingleFragme
     LinearLayout llEditDelete;
     ProgressDialog progressDialog;
 
-    public String getSourceFragment() {
-        return sourceFragment;
-    }
-
+   // ValidationUtilSaripaar validationUtilSaripaar ;
     ValidationUtilAwesome validationUtilAwesome;
 
     @Override
@@ -82,11 +88,19 @@ public class SqliteSingleFragment extends BaseSupportFragment<SqliteSingleFragme
     @Override
     public void configureUI() {
 
-        validationUtilAwesome = new ValidationUtilAwesome(getActivity(), this);
-
         sourceFragment = getArguments().getString(SqliteSingleSource);
         sourceAction = getArguments().getString(SqliteSingleAction);
         elementId = getArguments().getLong(INPUT_KEY);
+
+        //SARIPAAR VALIDATION
+        //validationUtilSaripaar=new ValidationUtilSaripaar(this,this);
+        //edName.setOnFocusChangeListener(validationUtilSaripaar);
+        //if (sourceFragment.equals(SqliteSourceItems)) {
+          //  edDescription.setOnFocusChangeListener(validationUtilSaripaar);
+       // }
+
+        //AWESOME VALIDATION
+        validationUtilAwesome = new ValidationUtilAwesome(getContainerActivity(), this);
         addValidationForEditText();
 
         if (sourceAction.equals(SqliteSingleActionGet)) {
@@ -132,23 +146,32 @@ public class SqliteSingleFragment extends BaseSupportFragment<SqliteSingleFragme
     private void addValidationForEditText() {
         ArrayList<Rule> rules = new ArrayList<>();
         rules.add(new IsEmptyRule(getString(R.string.empty_field)).build());
-        validationUtilAwesome.getAwesomeValidation().addValidation(edName, rules);
-        if (sourceFragment.equals(SqliteSourceItems)) {
-            validationUtilAwesome.getAwesomeValidation().addValidation(edDescription, rules);
+         validationUtilAwesome.getAwesomeValidation().addValidation(edName, rules);
+      if (sourceFragment.equals(SqliteSourceItems)) {
+          validationUtilAwesome.getAwesomeValidation().addValidation(edDescription, rules);
         }
-
         validationUtilAwesome.addOnFocusChangeListeners();
     }
 
 
     @OnClick(R.id.btnAdd)
     public void onBtnAddClicked() {
+
+          // validationUtilSaripaar.validateAllFirstError();
+        //  validationUtilSaripaar.validateAll();
+
         validationUtilAwesome.validateAllFirstError();
+       //validationUtilAwesome.validateAll();
     }
 
     @OnClick(R.id.btnSave)
     public void onBtnSaveClicked() {
-        validationUtilAwesome.validateAllFirstError();
+
+       // validationUtilSaripaar.validateAllFirstError();
+        //validationUtilSaripaar.validateAll();
+
+       validationUtilAwesome.validateAllFirstError();
+        // validationUtilAwesome.validateAll();
     }
 
     @OnClick(R.id.btnRemove)
@@ -183,7 +206,6 @@ public class SqliteSingleFragment extends BaseSupportFragment<SqliteSingleFragme
                 progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 progressDialog.setContentView(R.layout.progress_dialog);
                 progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-
             }
         }
 

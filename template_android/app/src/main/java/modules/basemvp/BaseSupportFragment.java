@@ -18,8 +18,9 @@ public abstract class BaseSupportFragment<P extends Base.IPresenter>
 
     public FragmentActivity mActivity;
 
-    public FragmentActivity getContainerActivity() {
-        //return getContainerActivity();
+    public FragmentActivity getContainerActivity()
+    {
+        //return getActivity();
         return mActivity;
     }
 

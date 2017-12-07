@@ -71,11 +71,7 @@ public class ValidationUtilAwesome implements
     }
 
     private void initValidation() {
-        // switch (ValidationStyle.valueOf("BASIC")) {
-        //   case BASIC:
         mAwesomeValidation = new AwesomeValidation();
-        //    break;
-        // }
     }
 
     private void clearValidation() {

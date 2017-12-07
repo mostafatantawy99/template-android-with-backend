@@ -24,6 +24,7 @@ import com.example.template.ui.TestRestApi.presenter.single.RestApiSingleFragmen
 import com.example.template.ui.utils.GUI.CustomSpinner;
 import com.example.template.utils.validation.awesome.ValidationUtilAwesome;
 import com.example.template.utils.validation.listeners.OnValidationCallBack;
+import com.example.template.utils.validation.saripaar.ValidationUtilSaripaar;
 
 import java.util.ArrayList;
 
@@ -82,11 +83,11 @@ public class RestApiSingleFragment extends BaseSupportFragment<RestApiSingleFrag
     @Override
     public void configureUI() {
 
-        validationUtilAwesome = new ValidationUtilAwesome(getContainerActivity(), this);
-
         sourceFragment = getArguments().getString(RestApiSingleSource);
         sourceAction = getArguments().getString(RestApiSingleAction);
         elementId = getArguments().getLong(INPUT_KEY);
+
+        validationUtilAwesome = new ValidationUtilAwesome(getContainerActivity(), this);
         addValidationForEditText();
 
         if (sourceAction.equals(RestApiSingleActionGet)) {

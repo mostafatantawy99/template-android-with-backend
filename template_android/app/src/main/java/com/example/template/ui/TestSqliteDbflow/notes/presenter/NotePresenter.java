@@ -32,7 +32,6 @@ public class NotePresenter
 
     }
 
-
     public void getNotes() {
         mDataManager.getDataHelper().getAll(new Note(), mContext, this);
     }
@@ -50,14 +49,15 @@ public class NotePresenter
         note.setComment(comment);
         note.setDate(new Date());
         note.setType(NoteType.TEXT);
-
         note.insertData(note, mContext, this);
         //or
-            //    mDataManager.getDataHelper().insertData(  note ,mContext,this );
-
+         //mDataManager.addLocalNote(noteText);
         Log.e("dbflowExample Note", "Inserted new note, ID: " + note.getId());
 
-    }
+      }
+
+
+
 
     @Override
     public void createView() {

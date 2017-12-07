@@ -139,7 +139,6 @@ public class CustomRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerV
                 ((RestApiListFrgCategoriesVH) holder).bindData(getItem(position), position);
         }
 
-
     }
 
     @Override
@@ -165,7 +164,7 @@ public class CustomRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
     public void removeItem(int position) {
         mList.remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     public void addItem(T data) {
@@ -192,8 +191,8 @@ public class CustomRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerV
         for (int i = 0; i < mItems.size(); i++) {
             mList.add(mItems.get(i));
         }
-        notifyDataSetChanged();
-    }
+       notifyDataSetChanged();
+     }
 
     public void addAll(List<T> mItems) {
         for (int i = 0; i < mItems.size(); i++) {
@@ -203,7 +202,7 @@ public class CustomRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerV
     }
 
     public void addAll(ArrayList<T> mItems) {
-        for (int i = 0; i < mItems.size(); i++) {
+         for (int i = 0; i < mItems.size(); i++) {
             mList.add(mItems.get(i));
         }
         notifyDataSetChanged();
@@ -216,25 +215,24 @@ public class CustomRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerV
             for (int i = 0; i < size; i++) {
                 this.mList.remove(0);
             }
-            this.notifyItemRangeRemoved(0, size);
+             this.notifyItemRangeRemoved(0, size);
         }
     }
 
-    public void addLoadingFooter() {
-        isLoadingAdded = true;
-        T data = null;
-        addItem(data);
-    }
-
-
-    public void removeLoadingFooter() {
-        isLoadingAdded = false;
-
-        int position = mList.size() - 1;
-        T data = getItem(position);
-        mList.remove(position);
-        notifyItemRemoved(position);
-    }
+//    public void addLoadingFooter() {
+//        isLoadingAdded = true;
+//        T data=null;
+//        addItem(data);
+//    }
+//
+//
+//    public void removeLoadingFooter() {
+//        isLoadingAdded = false;
+//        int position = mList.size() - 1;
+//        T data = getItem(position);
+//        mList.remove(position);
+//        notifyItemRemoved(position);
+//    }
 
 
 }

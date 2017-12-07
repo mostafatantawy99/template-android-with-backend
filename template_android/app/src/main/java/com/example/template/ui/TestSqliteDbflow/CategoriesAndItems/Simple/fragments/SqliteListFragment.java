@@ -75,6 +75,7 @@ public class SqliteListFragment extends BaseSupportFragment<SqliteListFragmentPr
             spCategories.setVisibility(View.VISIBLE);
             initSpCategories();
         }
+
         rv.setEmptyView(txtvEmpty);
         rv.setAdapter(adapter);
         rv.addItemDecoration(

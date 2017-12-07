@@ -104,13 +104,8 @@ public class DbHelper
         note.setComment(comment);
         note.setDate(new Date());
         note.setType(NoteType.TEXT);
-
         note.insertData(note, dbContext, callback);
-        //or
-        //        mDataManager.getDataHelper().insertData(  note ,mContext,this );
         Log.e("dbflowExample Note", "Inserted new note, ID: " + note.getId());
-
-
     }
 
     public void deleteNote(Note note, SqliteCallBack callback) {

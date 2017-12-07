@@ -9,6 +9,7 @@ For Android :
 2- there is datamanager class that is responsible for any operation on data 
 
 -it access this data by the following :
+
 --by db package by DbHelper class if it is local data in sqlite database 
 this is by using DBFlow library
 https://github.com/Raizlabs/DBFlow
@@ -21,7 +22,7 @@ https://github.com/square/retrofit
 
 3 - there are two methods for displaying RecyclerView
 
--using one adapter "CustomRecyclerViewAdapter class " :
+- using one adapter "CustomRecyclerViewAdapter class " :
 in this case you must create ViewHolder class for the cell 
 
 - using many adapters meaning that each RecyclerView has its own adapter 
@@ -37,7 +38,40 @@ in case of backend written by nodejs
 
 5 , 6 details below
 
-7- it has the following modules separated and you can run any of them by changing the opened activity in splash activity :
+7 - you will find getCategoriesRX in getCategories function in ApiHelper class but it is commented
+, it shows how to call restful api by using retrofit with rxjava 
+
+8 - In NotesActivity , RestApiSingleFragment , SqliteSingleFragment 
+ you will find validation using the following two methods
+
+- using 
+https://github.com/ragunathjawahar/android-saripaar
+
+- using awesomeValidation module , it is modified version of 
+https://github.com/thyrlian/AwesomeValidation
+
+these methods are  described here
+https://github.com/omar-adel/FormValidation
+
+I showed usage of the two methods in SqliteSingleFragment.java
+
+
+https://github.com/omar-adel/template-android-with-backend/blob/master/template_android/app/src/main/java/com/example/template/ui/TestSqliteDbflow/CategoriesAndItems/Simple/fragments/SqliteSingleFragment.java
+
+but saripaar method is commented
+
+and also I used the second method in NotesActivity 
+
+https://github.com/omar-adel/template-android-with-backend/blob/master/template_android/app/src/main/java/com/example/template/ui/TestSqliteDbflow/notes/NotesActivity.java
+,
+
+RestApiSingleFragment
+
+https://github.com/omar-adel/template-android-with-backend/blob/master/template_android/app/src/main/java/com/example/template/ui/TestRestApi/fragments/RestApiSingleFragment.java
+
+
+
+9- This android project has the following modules separated and you can run any of them by changing the opened activity in splash activity :
 
 1- RestApiListAct Activity : it has two fragments " categories and items " opened from navigation drawer
 - it connects with the php restful api for  mysql database "CategoryItems" 
@@ -75,6 +109,8 @@ as you want in map without continuous updating map to current location
 
 - display certain location in map in fragment 
 - also you can click on any point in map to get addresses of this point
+
+there are base fragments for mapdisplay and mapcontrol that I extend to make the code simple and object oriented .
 
 8 - SocketMainActivity :
 

@@ -23,6 +23,7 @@ import android.util.Log;
 import com.example.template.model.backend.ApiHelper;
 import com.example.template.model.backend.RestApiCallBack;
 import com.example.template.model.bean.sqlite.CacheApi;
+import com.example.template.model.bean.sqlite.Note;
 import com.example.template.model.db.DbHelper;
 import com.example.template.model.db.SqliteCallBack;
 import com.example.template.model.shareddata.Prefs;
@@ -399,6 +400,24 @@ public class DataManager {
     }
 
     ///Sqlite Dbflow
+
+    ////Sqlite Dbflow  notes
+
+
+    public void addLocalNote(String noteText) {
+
+        mDbHelper.addNote(noteText,mSqliteCallBack);
+    }
+
+    public void getLocalNotes() {
+
+          mDbHelper.getNotes(mSqliteCallBack);
+    }
+    public void deleteLocalNote(Note note) {
+
+        mDbHelper.deleteNote(note,mSqliteCallBack);
+    }
+
 
     ////Sqlite Dbflow  simpleItem
 

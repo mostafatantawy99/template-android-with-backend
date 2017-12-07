@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.example.template.model.DataManager;
 import com.example.template.model.bean.CategoriesRestApiResponse;
+import com.example.template.model.bean.CategoryRestApi;
 import com.example.template.model.bean.CategoryRestApiResponse;
 import com.example.template.model.bean.EditRestApiResponse;
 import com.example.template.model.bean.ItemRestApiResponse;
@@ -29,8 +30,12 @@ import com.example.template.model.bean.ItemsRestApiResponse;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -101,44 +106,48 @@ public class ApiHelper {
 
 
         //rxjava 2
-//        mAPIService.getCategoriesRX(param_securitykey )
-//                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//                 .subscribeWith(new DisposableObserver<CategoriesRestApiResponse>() {
-//                     @Override
-//                     public void onNext(@io.reactivex.annotations.NonNull CategoriesRestApiResponse response) {
-//
-//                         ArrayList<CategoryRestApi> categoriesRestApis = response.getResults();
-//                            callback.onDataListLoaded(categoriesRestApis,url);
-//
-//                     }
-//
-//                     @Override
-//                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-//
-//                     }
-//
-//                     @Override
-//                     public void onComplete() {
-//
-//                     }
-//                 });
+        mAPIService.getCategoriesRX(param_securitykey )
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                 .subscribeWith(new DisposableObserver<CategoriesRestApiResponse>() {
+                     @Override
+                     public void onNext(@io.reactivex.annotations.NonNull CategoriesRestApiResponse response) {
+
+                              callback.onDataObjectLoaded(response, url );
+                             if (caching) {
+                                 saveToCache(url, params, new Gson().toJson(response),
+                                         response.getClass().getName());
+                             }
+                     }
+
+                     @Override
+                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                         callback.onNetworkError(e.getMessage(), url);
+                         e.printStackTrace();
+                         Log.d(TAG, "onFailure: " + e.getMessage());
+                     }
+
+                     @Override
+                     public void onComplete() {
+
+                     }
+                 });
 
 
-        mAPIService.getCategories(param_securitykey).enqueue(new Callback<CategoriesRestApiResponse>() {
-            @Override
-            public void onResponse(Call<CategoriesRestApiResponse> call, Response<CategoriesRestApiResponse> response) {
-                completeWithResponse(response, callback, caching, url, params);
-            }
-
-
-            @Override
-            public void onFailure(Call<CategoriesRestApiResponse> call, Throwable t) {
-
-                callback.onNetworkError(t.getMessage(), url);
-                t.printStackTrace();
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+//        mAPIService.getCategories(param_securitykey).enqueue(new Callback<CategoriesRestApiResponse>() {
+//            @Override
+//            public void onResponse(Call<CategoriesRestApiResponse> call, Response<CategoriesRestApiResponse> response) {
+//                completeWithResponse(response, callback, caching, url, params);
+//            }
+//
+//
+//            @Override
+//            public void onFailure(Call<CategoriesRestApiResponse> call, Throwable t) {
+//
+//                callback.onNetworkError(t.getMessage(), url);
+//                t.printStackTrace();
+//                Log.d(TAG, "onFailure: " + t.getMessage());
+//            }
+//        });
 
     }
 
@@ -375,6 +384,7 @@ public class ApiHelper {
             }
         }
     }
+
 
 }
 

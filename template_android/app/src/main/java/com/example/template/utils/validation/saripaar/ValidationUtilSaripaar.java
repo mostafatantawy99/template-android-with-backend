@@ -1,6 +1,7 @@
 package com.example.template.utils.validation.saripaar;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,9 +29,19 @@ public class ValidationUtilSaripaar implements Validator.ValidationListener
         return validator;
     }
 
+
     public ValidationUtilSaripaar(Context context, OnValidationCallBack onValidationCallBack) {
         validator = new Validator(context);
         this.context = context;
+        this.onValidationCallBack = onValidationCallBack;
+        setImmediateMode();
+        //       setBurstMode();
+        this.validator.setValidationListener(this);
+    }
+
+    public ValidationUtilSaripaar(Fragment fragment, OnValidationCallBack onValidationCallBack) {
+        validator = new Validator(fragment);
+        this.context = fragment.getActivity();
         this.onValidationCallBack = onValidationCallBack;
         setImmediateMode();
         //       setBurstMode();
@@ -58,7 +69,7 @@ public class ValidationUtilSaripaar implements Validator.ValidationListener
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(context, "Form Successfully Validated", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Form Successfully Validated", Toast.LENGTH_SHORT).show();
         onValidationCallBack.onValidationSucceeded();
     }
 

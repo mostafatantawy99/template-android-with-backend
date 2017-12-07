@@ -44,10 +44,10 @@ public class Splash extends BaseAppCompatActivity<ISplashContract.ISplashPresent
             public void run() {
 
                myIntent = new Intent(Splash.this, RestApiListAct.class);
-//                  myIntent = new Intent(Splash.this, SqliteListAct.class);
+              //   myIntent = new Intent(Splash.this, SqliteListAct.class);
 //                 myIntent = new Intent(Splash.this, ComplexOperations.class);
-//                 myIntent = new Intent(Splash.this, SimpleItemActivity.class);
-                  // myIntent = new Intent(Splash.this, NotesActivity.class);
+                //myIntent = new Intent(Splash.this, SimpleItemActivity.class);
+               //  myIntent = new Intent(Splash.this, NotesActivity.class);
 //
                 // myIntent = new Intent(Splash.this, SocketMainActivity.class);
                  //myIntent = new Intent(Splash.this, MapDisplayActivity.class);
